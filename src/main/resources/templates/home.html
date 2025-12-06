@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gatekeeper</title>
+</head>
+<body>
+    <h1>Willkommen</h1>
+
+    <p>
+        <a th:href="@{/start-game}">>>> Spiel starten</a>
+    </p>
+    <hr>
+
+    <h3>Alle Fragen (Admin-Sicht):</h3>
+    <table border="1"> <thead>
+            <tr>
+                <th>ID</th>
+                <th>Frage</th>
+                <th>Anzahl Optionen</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="q : ${myQuestions}">
+                <td th:text="${q.id}">1</td>
+                <td th:text="${q.questionText}">Beispielfrage</td>
+                <td th:text="${q.options.size()}">0</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

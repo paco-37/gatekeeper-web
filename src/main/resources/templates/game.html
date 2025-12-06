@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <h1>Frage <span th:text="${session.gameSession.currentQuestionIndex + 1}">1</span></h1>
+    
+    <h2 th:text="${question.questionText}">Hier steht die Frage</h2>
+
+    <div class="options">
+        <div th:each="opt : ${question.options}">
+            <a th:href="@{/submit-answer(optionId=${opt.id})}" 
+               th:text="${opt.text}"
+               style="display:block; padding: 10px; background: #eee; margin: 5px;">
+               Antwort
+            </a>
+        </div>
+    </div>
+</body>
+</html>
