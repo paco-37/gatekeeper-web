@@ -34,7 +34,7 @@ public class HomeController {
     public String adminDashboard(Model model) {
         model.addAttribute("myQuestions", questionRepository.findAll());
         model.addAttribute("applicants", applicantRepository.findTop10ByOrderByTotalScoreDesc());
-        return "admin"; 
+        return "admin";
     }
 
     @GetMapping("/delete-question")
@@ -97,7 +97,34 @@ public class HomeController {
 
     @GetMapping("/login")
     public String showLoginForm() {
-        return "login"; 
+        return "login";
+    }
+
+    @GetMapping("/edit-question")
+    public String showEditForm(@RequestParam("id") int id, Model model) {
+        Question q = questionRepository.findById(id).orElse(null);
+
+        model.addAttribute("categories", categoryRepository.findAll());
+
+        model.addAttribute("question", q);
+
+        return "edit_question"; 
+    }
+
+    @PostMapping("/update-question")
+    public String updateQuestion(@ModelAttribute("question") Question formData) {
+        
+        Question existingQuestion = questionRepository.findById(formData.getId()).orElse(null);
+        
+        if (existingQuestion != null) {
+            existingQuestion.setQuestionText(formData.getQuestionText());
+            existingQuestion.setWeight(formData.getWeight());
+            existingQuestion.setCategory(formData.getCategory());
+            
+            questionRepository.save(existingQuestion);
+        }
+        
+        return "redirect:/admin";
     }
 
 }

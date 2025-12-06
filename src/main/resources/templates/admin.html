@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-50 min-h-screen font-sans text-gray-800">
 
     <nav class="bg-white shadow-sm border-b border-gray-200 px-6 py-4 flex justify-between items-center">
@@ -12,7 +14,7 @@
             <span class="text-2xl">🛡️</span>
             <h1 class="text-xl font-bold text-gray-700">Gatekeeper Admin</h1>
         </div>
-        
+
         <form th:action="@{/logout}" method="post">
             <button type="submit" class="text-sm font-medium text-gray-500 hover:text-rose-500 transition-colors">
                 Abmelden &rarr;
@@ -28,32 +30,55 @@
                     <h2 class="text-2xl font-bold text-gray-800">Fragen-Katalog</h2>
                     <p class="text-sm text-gray-500">Verwalte hier die Fragen und Antworten.</p>
                 </div>
-                <a href="/add-question" class="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg shadow-sm text-sm font-semibold transition-colors flex items-center gap-2">
-                    <span>+</span> Neue Frage
-                </a>
+
+                <div class="flex gap-3">
+                    <a href="/categories"
+                        class="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-lg shadow-sm text-sm font-semibold transition-colors flex items-center gap-2">
+                        📂 Kategorien
+                    </a>
+
+                    <a href="/add-question"
+                        class="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg shadow-sm text-sm font-semibold transition-colors flex items-center gap-2">
+                        <span>+</span> Neue Frage
+                    </a>
+                </div>
             </div>
 
             <div class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Frage</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Optionen</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aktionen</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Frage</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Optionen</th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Aktionen</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         <tr th:each="q : ${myQuestions}" class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" th:text="${q.id}">1</td>
-                            <td class="px-6 py-4 text-sm font-medium text-gray-900" th:text="${q.questionText}">Fragetext</td>
+                            <td class="px-6 py-4 text-sm font-medium text-gray-900" th:text="${q.questionText}">
+                                Fragetext</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                <span class="bg-rose-100 text-rose-800 text-xs font-semibold px-2.5 py-0.5 rounded" th:text="${q.options.size()}">0</span>
+                                <span class="bg-rose-100 text-rose-800 text-xs font-semibold px-2.5 py-0.5 rounded"
+                                    th:text="${q.options.size()}">0</span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                <a th:href="@{/manage-options(id=${q.id})}" class="text-blue-600 hover:text-blue-900">Optionen</a>
+                                <a th:href="@{/edit-question(id=${q.id})}"
+                                    class="text-yellow-600 hover:text-yellow-900 transition-colors">
+                                    ✎ Bearbeiten
+                                </a>
                                 <span class="text-gray-300">|</span>
-                                <a th:href="@{/delete-question(id=${q.id})}" onclick="return confirm('Löschen?')" class="text-red-600 hover:text-red-900">Löschen</a>
+
+                                <a th:href="@{/manage-options(id=${q.id})}"
+                                    class="text-blue-600 hover:text-blue-900">Optionen</a>
+                                <span class="text-gray-300">|</span>
+                                <a th:href="@{/delete-question(id=${q.id})}" onclick="return confirm('Löschen?')"
+                                    class="text-red-600 hover:text-red-900">Löschen</a>
                             </td>
                         </tr>
                     </tbody>
@@ -67,25 +92,32 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Compatibility Score</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aktion</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Compatibility Score</th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Aktion</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         <tr th:if="${applicants.empty}">
-                            <td colspan="3" class="px-6 py-4 text-center text-gray-500 italic">Noch keine Daten vorhanden.</td>
+                            <td colspan="3" class="px-6 py-4 text-center text-gray-500 italic">Noch keine Daten
+                                vorhanden.</td>
                         </tr>
                         <tr th:each="app : ${applicants}">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900" th:text="${app.firstName}">Name</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900"
+                                th:text="${app.firstName}">Name</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 <div class="w-full bg-gray-200 rounded-full h-2.5 max-w-[100px]">
-                                    <div class="bg-rose-500 h-2.5 rounded-full" th:style="'width: ' + ${app.totalScore} + '%'"></div>
+                                    <div class="bg-rose-500 h-2.5 rounded-full"
+                                        th:style="'width: ' + ${app.totalScore} + '%'"></div>
                                 </div>
                                 <span class="text-xs mt-1 block" th:text="${app.totalScore} + '%'"></span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
-                                <a th:href="@{/delete-applicant(id=${app.id})}" onclick="return confirm('Löschen?')" class="text-gray-400 hover:text-red-600 transition-colors">
+                                <a th:href="@{/delete-applicant(id=${app.id})}" onclick="return confirm('Löschen?')"
+                                    class="text-gray-400 hover:text-red-600 transition-colors">
                                     &times;
                                 </a>
                             </td>
@@ -97,4 +129,5 @@
 
     </div>
 </body>
+
 </html>

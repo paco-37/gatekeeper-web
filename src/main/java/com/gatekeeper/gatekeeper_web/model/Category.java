@@ -1,9 +1,12 @@
 package com.gatekeeper.gatekeeper_web.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,20 +16,21 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
     private String name;
 
-    public Category(int id, String name) {
-        this.id = id;
+    @OneToMany(mappedBy = "category")
+    private List<Question> questions;
+
+    public Category() {
+    }
+
+    public Category(String name) {
         this.name = name;
     }
 
-    public Category() {}
-
     public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
     public String getName() { return name; }
-
-    @Override
-    public String toString() {
-        return "[" + id + "] " + name;
-    }
+    public void setName(String name) { this.name = name; }
 }

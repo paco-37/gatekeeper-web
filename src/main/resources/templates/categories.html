@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kategorien verwalten</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans p-10">
+
+    <div class="max-w-4xl mx-auto">
+        
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Kategorien verwalten</h1>
+            <a href="/admin" class="text-gray-500 hover:text-rose-500 font-medium transition-colors">&larr; Zurück zum Dashboard</a>
+        </div>
+
+        <div th:if="${param.error}" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded shadow-sm" role="alert">
+            <p class="font-bold">Fehler beim Löschen</p>
+            <p>Diese Kategorie wird noch von Fragen verwendet und kann nicht entfernt werden.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <div class="md:col-span-2 bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                            <th class="px-6 py-3 text-right">Aktion</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr th:each="cat : ${categories}" class="hover:bg-gray-50">
+                            <td class="px-6 py-4 text-sm text-gray-500" th:text="${cat.id}">1</td>
+                            <td class="px-6 py-4 text-sm font-bold text-gray-800" th:text="${cat.name}">Java</td>
+                            <td class="px-6 py-4 text-right">
+                                <a th:href="@{/delete-category(id=${cat.id})}" 
+                                   onclick="return confirm('Kategorie wirklich löschen?')"
+                                   class="text-red-400 hover:text-red-600 transition-colors">
+                                    &times; Löschen
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="md:col-span-1">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 sticky top-10">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Neu erstellen</h3>
+                    
+                    <form th:action="@{/save-category}" th:object="${newCategory}" method="post" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Bezeichnung</label>
+                            <input type="text" th:field="*{name}" required placeholder="z.B. Soft Skills"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none">
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 rounded-lg shadow transition-colors">
+                            Hinzufügen
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
