@@ -9,9 +9,10 @@
 <body>
     <h1>Willkommen</h1>
 
-    <p>
-        <a th:href="@{/start-game}">>>> Spiel starten</a>
-    </p>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Abmelden</button>
+    </form>
+    
     <hr>
 
     <h3>Alle Fragen (Admin-Sicht):</h3>
