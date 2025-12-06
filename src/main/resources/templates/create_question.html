@@ -3,33 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Neue Frage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Neue Frage erstellen</h1>
+<body class="bg-gray-50 h-screen flex items-center justify-center">
 
-    <form th:action="@{/save-question}" th:object="${question}" method="post">
-        
-        <label>Frage:</label><br>
-        <input type="text" th:field="*{questionText}" required placeholder="z.B. Magst du Hunde?"><br><br>
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border border-gray-100">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Neue Frage erstellen</h2>
 
-        <label>Gewichtung (1-10):</label><br>
-        <input type="number" th:field="*{weight}" min="1" max="10" value="5"><br><br>
+        <form th:action="@{/save-question}" th:object="${question}" method="post" class="space-y-5">
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Fragestellung</label>
+                <input type="text" th:field="*{questionText}" required placeholder="z.B. Magst du Pizza mit Ananas?"
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none transition-all">
+            </div>
 
-        <label>Kategorie:</label><br>
-        <select th:field="*{category}">
-            <option th:each="cat : ${categories}" 
-                    th:value="${cat.id}" 
-                    th:text="${cat.name}">
-                Kategorie-Name
-            </option>
-        </select>
-        <br><br>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kategorie</label>
+                    <select th:field="*{category}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none bg-white">
+                        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}">Kat</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Gewichtung (1-10)</label>
+                    <input type="number" th:field="*{weight}" min="1" max="10" 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none">
+                </div>
+            </div>
 
-        <button type="submit">Speichern</button>
-    </form>
-    
-    <br>
-    <a href="/">Abbrechen</a>
+            <div class="pt-4 flex gap-3">
+                <button type="submit" class="flex-1 bg-rose-500 hover:bg-rose-600 text-white py-2 rounded-lg font-semibold shadow-md transition-colors">
+                    Speichern
+                </button>
+                <a href="/admin" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-lg font-semibold text-center transition-colors">
+                    Abbrechen
+                </a>
+            </div>
+        </form>
+    </div>
 
 </body>
 </html>

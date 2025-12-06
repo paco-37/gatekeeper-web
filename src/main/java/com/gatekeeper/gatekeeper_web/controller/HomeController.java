@@ -95,4 +95,9 @@ public class HomeController {
         return "redirect:/admin";
     }
 
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login"; 
+    }
+
 }

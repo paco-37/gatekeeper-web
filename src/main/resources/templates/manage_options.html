@@ -3,52 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Optionen verwalten</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-50 min-h-screen p-10 font-sans">
 
-    <h1>Optionen verwalten</h1>
-    <h2 th:text="'Frage: ' + ${question.questionText}">Frage...</h2>
-
-    <h3>Vorhandene Antworten:</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Antwort-Text</th>
-                <th>Punkte</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="opt : ${question.options}">
-                <td th:text="${opt.id}">1</td>
-                <td th:text="${opt.text}">Ja</td>
-                <td th:text="${opt.score}">10</td>
-            </tr>
-            <tr th:if="${question.options.empty}">
-                <td colspan="3">Noch keine Antworten angelegt.</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <hr>
-
-    <h3>Neue Antwort hinzufügen:</h3>
-    
-    <form th:action="@{/add-option}" th:object="${newOption}" method="post">
+    <div class="max-w-2xl mx-auto">
+        <a href="/admin" class="text-sm text-gray-500 hover:text-gray-700 mb-4 inline-block">&larr; Zurück zum Dashboard</a>
         
-        <input type="hidden" name="questionId" th:value="${question.id}">
+        <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+            
+            <div class="bg-gray-50 px-8 py-6 border-b border-gray-200">
+                <span class="text-xs font-bold text-rose-500 uppercase tracking-wide">Frage bearbeiten</span>
+                <h1 class="text-xl font-bold text-gray-800 mt-1" th:text="${question.questionText}">Frage...</h1>
+            </div>
 
-        <label>Antwort-Text:</label>
-        <input type="text" th:field="*{text}" required placeholder="z.B. Auf jeden Fall!">
-        
-        <label>Punkte (0-10):</label>
-        <input type="number" th:field="*{score}" min="0" max="10" required>
+            <div class="p-8">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3">Gespeicherte Antworten:</h3>
+                
+                <div class="space-y-2 mb-8">
+                    <div th:if="${question.options.empty}" class="text-gray-400 italic text-sm">Noch keine Antworten.</div>
+                    
+                    <div th:each="opt : ${question.options}" class="flex items-center justify-between bg-gray-50 p-3 rounded-lg border border-gray-100">
+                        <span class="text-gray-800 font-medium" th:text="${opt.text}">Text</span>
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded font-bold" th:text="${opt.score} + ' Pkt'">10 Pkt</span>
+                    </div>
+                </div>
 
-        <button type="submit">Hinzufügen [+]</button>
-    </form>
+                <hr class="border-gray-100 mb-8">
 
-    <br><br>
-    <a href="/"> << Zurück zur Übersicht</a>
+                <h3 class="text-sm font-semibold text-gray-700 mb-3">Neue Antwort hinzufügen:</h3>
+                <form th:action="@{/add-option}" th:object="${newOption}" method="post" class="flex gap-2">
+                    <input type="hidden" name="questionId" th:value="${question.id}">
+
+                    <input type="text" th:field="*{text}" required placeholder="Antwort-Text"
+                           class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none">
+                    
+                    <input type="number" th:field="*{score}" min="0" max="10" placeholder="Pkt"
+                           class="w-20 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none">
+
+                    <button type="submit" class="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg font-bold shadow-sm transition-colors">
+                        +
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

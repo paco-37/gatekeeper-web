@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<body>
-    <h1>Frage <span th:text="${session.gameSession.currentQuestionIndex + 1}">1</span></h1>
-    
-    <h2 th:text="${question.questionText}">Hier steht die Frage</h2>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-rose-50 to-pink-100 min-h-screen flex items-center justify-center p-4 font-sans">
 
-    <div class="options">
-        <div th:each="opt : ${question.options}">
-            <a th:href="@{/submit-answer(optionId=${opt.id})}" 
+    <div class="bg-white p-8 rounded-2xl shadow-xl max-w-lg w-full relative overflow-hidden">
+        
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-rose-400 to-pink-500"></div>
+
+        <div class="text-center text-sm font-semibold text-rose-400 mb-6 tracking-wider uppercase">
+            Frage <span th:text="${gameSession.currentQuestionIndex + 1}">1</span> 
+            von <span th:text="${gameSession.questions.size()}">5</span>
+        </div>
+
+        <h2 class="text-3xl font-bold text-gray-800 mb-10 text-center leading-tight" 
+            th:text="${question.questionText}">
+            Hier steht die Frage?
+        </h2>
+
+        <div class="space-y-4">
+            <a th:each="opt : ${question.options}"
+               th:href="@{/submit-answer(optionId=${opt.id})}"
                th:text="${opt.text}"
-               style="display:block; padding: 10px; background: #eee; margin: 5px;">
-               Antwort
+               class="block w-full text-center py-4 px-6 bg-white border-2 border-rose-200 text-rose-600 font-semibold rounded-xl hover:bg-rose-500 hover:border-rose-500 hover:text-white transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5">
+               Antwortmöglichkeit
             </a>
         </div>
     </div>
+
 </body>
 </html>

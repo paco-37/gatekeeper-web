@@ -3,25 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Auswertung</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Assessment abgeschlossen</h1>
-    
-    <p>Dein Compatibility-Score:</p>
-    <h2 th:text="${percentage} + '%'">0%</h2>
+<body class="bg-gradient-to-br from-rose-100 to-pink-200 min-h-screen flex items-center justify-center p-4 font-sans">
 
-    <hr>
-
-    <h3>Bewerbung abschließen</h3>
-    <p>Bitte gib deinen Namen ein, um das Ergebnis zu speichern.</p>
-
-    <form th:action="@{/save-applicant}" th:object="${applicant}" method="post">
+    <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-md w-full text-center">
         
-        <label>Name:</label>
-        <input type="text" th:field="*{firstName}" placeholder="Dein Name" required>
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Assessment abgeschlossen!</h1>
         
-        <button type="submit">Speichern & Beenden</button>
-    </form>
+        <p class="text-gray-500 mb-2 text-lg">Dein Compatibility-Score:</p>
+        
+        <div class="relative inline-block mb-10">
+             <div class="absolute inset-0 bg-rose-200 rounded-full blur-xl opacity-50 animate-pulse"></div>
+            <h2 class="relative text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-rose-500 to-pink-600" 
+                th:text="${percentage} + '%'">
+                0%
+            </h2>
+        </div>
+
+        <div class="border-t border-gray-100 pt-8">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Ergebnis speichern</h3>
+            <p class="text-gray-600 mb-6 leading-relaxed">Trage deinen Namen ein, um in den Kandidaten-Pool aufgenommen zu werden.</p>
+
+            <form th:action="@{/save-applicant}" th:object="${applicant}" method="post" class="space-y-4">
+                
+                <div>
+                    <input type="text" th:field="*{firstName}" placeholder="Dein Name (z.B. 'Marie')" required
+                           class="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-gray-200 focus:border-rose-500 focus:bg-white focus:ring-4 focus:ring-rose-100 transition-all outline-none text-lg text-center font-medium text-gray-700 placeholder-gray-400">
+                </div>
+                
+                <button type="submit"
+                        class="w-full py-4 px-6 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold text-xl rounded-full shadow-lg hover:shadow-xl hover:from-rose-600 hover:to-pink-600 transition-all duration-300 transform hover:-translate-y-1">
+                     Speichern & Beenden
+                </button>
+            </form>
+        </div>
+    </div>
 
 </body>
 </html>
