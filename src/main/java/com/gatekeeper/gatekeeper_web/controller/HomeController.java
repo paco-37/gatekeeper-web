@@ -42,7 +42,7 @@ public class HomeController {
 
         questionRepository.deleteById(id);
 
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
     @GetMapping("/add-question")
@@ -59,7 +59,7 @@ public class HomeController {
 
         questionRepository.save(question);
 
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
     @GetMapping("/manage-options")
@@ -92,7 +92,7 @@ public class HomeController {
 
         applicantRepository.deleteById(id);
 
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
 }
