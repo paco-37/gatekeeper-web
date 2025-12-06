@@ -1,47 +1,50 @@
 package com.gatekeeper.gatekeeper_web.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="applicants")
 public class Applicant {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String first_name;
-    private int total_score;
+    
+    @Column(name = "first_name") // DB-Spalte heißt first_name
+    private String firstName;    // Java-Variable heißt firstName
+
+    @Column(name = "total_score") // DB-Spalte heißt total_score
+    private int totalScore;       // Java-Variable heißt totalScore
 
 
     public Applicant() {}
-
-    public Applicant(String first_name, int total_score) {
-        this.first_name = first_name;
-        this.total_score = total_score;
-    }
-
-    public Applicant(int id, String first_name, int total_score) {
-        this.id = id;
-        this.first_name = first_name;
-        this.total_score = total_score;
+    
+    public Applicant(String firstName, int totalScore) {
+        this.firstName = firstName;
+        this.totalScore = totalScore;
     }
 
 
     public int getId() {
         return id;
     }
-    public String getFirst_name() {
-        return first_name;
-    }
-    public int getTotal_score() {
-        return total_score;
-    }
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public int getTotalScore() { return totalScore; }
+    public void setTotalScore(int totalScore) { this.totalScore = totalScore; }
+
     public void setId(int id) {
         this.id = id;
     }
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-    public void setTotal_score(int total_score) {
-        this.total_score = total_score;
-    }
     @Override
     public String toString() {
-        return "Name: " + first_name + "| Score: " + total_score + "%";
+        return "Name: " + firstName + "| Score: " + totalScore + "%";
     }
     
 }

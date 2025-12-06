@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Gatekeeper</title>
 </head>
+
 <body>
     <h1>Willkommen</h1>
 
@@ -13,11 +15,13 @@
     <hr>
 
     <h3>Alle Fragen (Admin-Sicht):</h3>
-    <table border="1"> <thead>
+    <table border="1">
+        <thead>
             <tr>
                 <th>ID</th>
                 <th>Frage</th>
                 <th>Anzahl Optionen</th>
+                <th>Aktion</th>
             </tr>
         </thead>
         <tbody>
@@ -25,9 +29,48 @@
                 <td th:text="${q.id}">1</td>
                 <td th:text="${q.questionText}">Beispielfrage</td>
                 <td th:text="${q.options.size()}">0</td>
+                <td>
+                    <a th:href="@{/delete-question(id=${q.id})}" style="color: red;"
+                        onclick="return confirm('Wirklich löschen?');">
+                        [X] Löschen
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/manage-options(id=${q.id})}" style="margin-left: 10px;">
+                        [⚙️ Optionen]
+                    </a>
+
+                    <a th:href="@{/delete-question(id=${q.id})}" ...> ... </a>
+                </td>
             </tr>
         </tbody>
     </table>
+    <a href="/add-question">Neue Frage hinzufügen [+]</a>
+
+    <hr>
+
+    <h3>Aktuelle Kandidaten (Top 10)</h3>
+
+    <table border="1" style="width: 50%; margin: 0 auto;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${applicants.empty}">
+                <td colspan="2">Noch keine Bewerbungen.</td>
+            </tr>
+
+            <tr th:each="app : ${applicants}">
+                <td th:text="${app.firstName}">Max</td>
+                <td th:text="${app.totalScore} + '%'">90%</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
 
 </body>
+
 </html>

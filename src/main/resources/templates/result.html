@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Auswertung</title>
+</head>
+<body>
+    <h1>Assessment abgeschlossen</h1>
+    
+    <p>Dein Compatibility-Score:</p>
+    <h2 th:text="${percentage} + '%'">0%</h2>
+
+    <hr>
+
+    <h3>Bewerbung abschließen</h3>
+    <p>Bitte gib deinen Namen ein, um das Ergebnis zu speichern.</p>
+
+    <form th:action="@{/save-applicant}" th:object="${applicant}" method="post">
+        
+        <label>Name:</label>
+        <input type="text" th:field="*{firstName}" placeholder="Dein Name" required>
+        
+        <button type="submit">Speichern & Beenden</button>
+    </form>
+
+</body>
+</html>

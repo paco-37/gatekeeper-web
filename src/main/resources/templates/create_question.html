@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Neue Frage</title>
+</head>
+<body>
+    <h1>Neue Frage erstellen</h1>
+
+    <form th:action="@{/save-question}" th:object="${question}" method="post">
+        
+        <label>Frage:</label><br>
+        <input type="text" th:field="*{questionText}" required placeholder="z.B. Magst du Hunde?"><br><br>
+
+        <label>Gewichtung (1-10):</label><br>
+        <input type="number" th:field="*{weight}" min="1" max="10" value="5"><br><br>
+
+        <label>Kategorie:</label><br>
+        <select th:field="*{category}">
+            <option th:each="cat : ${categories}" 
+                    th:value="${cat.id}" 
+                    th:text="${cat.name}">
+                Kategorie-Name
+            </option>
+        </select>
+        <br><br>
+
+        <button type="submit">Speichern</button>
+    </form>
+    
+    <br>
+    <a href="/">Abbrechen</a>
+
+</body>
+</html>

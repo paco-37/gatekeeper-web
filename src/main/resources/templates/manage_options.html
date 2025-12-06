@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Optionen verwalten</title>
+</head>
+<body>
+
+    <h1>Optionen verwalten</h1>
+    <h2 th:text="'Frage: ' + ${question.questionText}">Frage...</h2>
+
+    <h3>Vorhandene Antworten:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Antwort-Text</th>
+                <th>Punkte</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="opt : ${question.options}">
+                <td th:text="${opt.id}">1</td>
+                <td th:text="${opt.text}">Ja</td>
+                <td th:text="${opt.score}">10</td>
+            </tr>
+            <tr th:if="${question.options.empty}">
+                <td colspan="3">Noch keine Antworten angelegt.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h3>Neue Antwort hinzufügen:</h3>
+    
+    <form th:action="@{/add-option}" th:object="${newOption}" method="post">
+        
+        <input type="hidden" name="questionId" th:value="${question.id}">
+
+        <label>Antwort-Text:</label>
+        <input type="text" th:field="*{text}" required placeholder="z.B. Auf jeden Fall!">
+        
+        <label>Punkte (0-10):</label>
+        <input type="number" th:field="*{score}" min="0" max="10" required>
+
+        <button type="submit">Hinzufügen [+]</button>
+    </form>
+
+    <br><br>
+    <a href="/"> << Zurück zur Übersicht</a>
+
+</body>
+</html>
