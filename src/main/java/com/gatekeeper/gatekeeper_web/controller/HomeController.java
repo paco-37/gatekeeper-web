@@ -87,5 +87,13 @@ public class HomeController {
         
         return "redirect:/manage-options?id=" + questionId;
     }
+
+    @GetMapping("/delete-applicant")
+    public String deleteApplicant(@RequestParam("id") int id) {
+        
+        applicantRepository.deleteById(id);
+        
+        return "redirect:/";
+    }
     
 }
